@@ -1,8 +1,10 @@
-## Welcome to GitHub Pages
+## Welcome to AutoVehicle Path Following test
 
-You can use the [editor on GitHub](https://github.com/pchsRoboticPgram/AutoVehiclePathFollowing/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This page is to let other team mates of pchs robotics 4142, 3721 or other people interested in seeing how this works. This work is based off of Daniel Shiffman's Nature of Code document chapter 6 (or 5 for book 2). 
+[Nature of Code](https://natureofcode.com/)
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+To who ever reads this who is from pchs: contact me if something is wrong.
+
 
 ### Markdown
 
