@@ -12,22 +12,28 @@ var pathPoints = [];
 var offX;
 var offY;
 
+let bg;
+
+function preload(){
+  bg = loadImage('field.jpg');
+}
 
 function setup() {
   createCanvas(400, 400);
+  
   robo = new Robot(400, 100);
   paTH = new Path();
 
   //generate node points for the path and place in array
-  for(let i=0; i< 6; i++){
-    let x = 400 - (50*i);   //cos(float(i)/10.0 * Math.PI * 2.0) + width/2;
-    let y = 100;   //sin(float(i)/10.0 * Math.PI * 2.0) + height/2;
+  for(let i=0; i< 10; i++){
+    let x = 100*cos(float(i)/10.0 * Math.PI * 2.0) + width/2;
+    let y = 100*sin(float(i)/10.0 * Math.PI * 2.0) + height/2;
     paTH.points[i] = createVector(x,y);
   }
 }
 
 function draw() {
-  background(220);
+  background(bg);
   let mouse = createVector(mouseX, mouseY);
 
   //add new point when button is pressed
@@ -62,12 +68,12 @@ function draw() {
     }
     else{
       rolled = false;
-      noFill();
+      fill(255,255,127);
     }
     
     //mark the node points with a circle
     if(paTH.points.length != 0){
-      ellipse(paTH.points[c].x, paTH.points[c].y, 5);
+      ellipse(paTH.points[c].x, paTH.points[c].y, 10);
     }
   }
 
@@ -83,7 +89,7 @@ function draw() {
 
 
   //start the robot and make it follow the path
-  robo.follow(pathPoints);
+  robo.follow(pathPoints, paTH);
   robo.run();
 }
 
