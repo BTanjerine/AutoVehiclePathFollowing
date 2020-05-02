@@ -15,8 +15,8 @@ var offY;
 
 function setup() {
   createCanvas(400, 400);
-  robo = new Robot(400, 100);
-  paTH = new Path();
+  robo = new include.Robot(400, 100);
+  paTH = new include.Path();
 
   //generate node points for the path and place in array
   for(let i=0; i< 6; i++){
