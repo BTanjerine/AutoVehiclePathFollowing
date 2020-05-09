@@ -11,4 +11,19 @@
     <script src="robot.js"></script>
     <script src="path.js"></script>
 
+    <h1>Path Following Code</h1>
+    <p>This page is to let other team mates of pchs robotics 4142, 3721 or other people interested in seeing how this works. <br> This work is based off of Daniel Shiffman's Nature of Code document chapter 6 (or 5 for book 2). <a href="https://natureofcode.com/">Nature of Code</a> </p>
+    
+    <pre>
+      Path is generated using spline path generation. Basic 3rd degree path gen so 2 control points on the ends of the path.
+        - Planning to switch to bezier curves
+
+      Path following is based off of code from the Nature of Code lessons.
+        - predicts the future position of the robot by extending the velocity vector of the robot. 
+        Using vector projection, we find the point closests to the future position and the robot follows that point.
+        - Using a combo of velocity and acceleration vectors, the robot is guided towards the desired position and follows the path.
+    </pre>
+   
+    
+
 </body></html>

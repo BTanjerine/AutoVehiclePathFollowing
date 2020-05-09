@@ -1,3 +1,4 @@
+let i = 0;
 class Robot{
 
   constructor(X,Y){
@@ -10,8 +11,8 @@ class Robot{
     this.vel = createVector();
     this.acc = createVector();
     //max velocity and acceleration
-    this.maxSpeed = 3;
-    this.maxForce = 0.1;
+    this.maxSpeed = 4;
+    this.maxForce = 0.5;
   }
 
   // seek a specific target (cartesian point)
@@ -21,8 +22,8 @@ class Robot{
     let d = desPos.mag(); //get vector magnitude
 
     //adjust the velocity of the robot based on distance from point
-    if(d < 100){
-      let speed = map(d, 0, 100, 0, this.maxSpeed);
+    if(d < 70){
+      let speed = map(d, 0, 70, 0, this.maxSpeed);
       desPos.setMag(speed);
     }
     else{
@@ -35,32 +36,46 @@ class Robot{
     this.applyForce(handleForce); //apply the force to the robot
   }
 
-  follow(pp){
-    let recordDist = 10000000; //really big number so it can easily be beaten
+  follow(pp, pathClass){
+    let recordDist = 100000000; //really big number so it can easily be beaten
     let targetPos = null;
     let norm= null;
 
+    let PA = 0;
+    let PB = 0;
+
     //predict where the robot is going to be 
     let futurePoint = this.vel.copy();
-    futurePoint.setMag(40); //extend
+    futurePoint.setMag(30); //extend
     let futurePos = p5.Vector.add(this.pos, futurePoint); //generate predicted point
 
     //scroll through all the path points (not nodes)
-    for(let i=0; i < (pathPoints.length+1.98499)-0.1; i+=0.005){
+    for(let i=0; i<(float(paTH.points.length)-3.0)-0.005; i+=0.005){
       //find 2 points on the path (really close to each other)
       let pA = pp[i]; 
       let pB = pp[i+0.005];
 
+      PA = pA;
+      PB = pB;
+
       //find the point normal to the path on the path
-      let normPoint = getNormalPoint(futurePoint, pA, pB);
+      let normPoint = getNormalPoint(futurePoint, pA, pB); 
 
       //make sure the normal point is in range of the 2 points of the path
-      if(normPoint.x < pA.x || normPoint.x > pB.x){
+      let NtoA = p5.Vector.dist(normPoint,pA);
+      let NtoB = p5.Vector.dist(normPoint,pB);
+      let AtoB = p5.Vector.dist(pA,pB);
+
+      if((NtoA + NtoB) == AtoB){
         normPoint = pB.copy();
+        //console.log("work");
+      }
+      else{
+        normPoint = pA.copy();
       }
 
       //find the distance of the future point to the normal point on the path
-      let distance = p5.Vector.dist(futurePos, normPoint);
+      let distance = p5.Vector.dist(normPoint,futurePos);
 
       //find the smallest distance for the robot to get back on track
       if(distance < recordDist){
@@ -69,15 +84,27 @@ class Robot{
 
         //find a point ahead of the normal 
         let dir = p5.Vector.sub(pB, pA);
-        dir.setMag(10); 
+        dir.normalize(); 
 
         //generate point on the path that the robot should follow
-        targetPos = normPoint.copy();
+        targetPos = normPoint;
         targetPos.add(dir);
       }
     }
+    
+    if(i == 0){
+      console.log(pp);
 
-    if(recordDist > 1 && targetPos !== null){
+      console.log(this.pos);
+
+      console.log(futurePos);
+
+      console.log(norm);
+      console.log(targetPos);
+      i++;
+    }
+
+    if(recordDist > 1 && targetPos != null){
       //follow this point
       this.seek(targetPos);
     }
@@ -87,6 +114,7 @@ class Robot{
     if(norm !== null){line(futurePos.x, futurePos.y, norm.x, norm.y);}
     fill(255, 0, 0);
     ellipse(targetPos.x, targetPos.y, 10);
+    ellipse(280.9, 258.77, 5);
   }
   
   //add a force to steer the robot
