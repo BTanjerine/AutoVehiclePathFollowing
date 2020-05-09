@@ -21,7 +21,7 @@ function preload(){
 function setup() {
   createCanvas(400, 400);
   
-  robo = new Robot(400, 100);
+  robo = new Robot(400, 200);
   paTH = new Path();
 
   //generate node points for the path and place in array

@@ -22,8 +22,8 @@ class Robot{
     let d = desPos.mag(); //get vector magnitude
 
     //adjust the velocity of the robot based on distance from point
-    if(d < 50){
-      let speed = map(d, 0, 50, 0, this.maxSpeed);
+    if(d < 70){
+      let speed = map(d, 0, 70, 0, this.maxSpeed);
       desPos.setMag(speed);
     }
     else{
@@ -46,7 +46,7 @@ class Robot{
 
     //predict where the robot is going to be 
     let futurePoint = this.vel.copy();
-    futurePoint.setMag(20); //extend
+    futurePoint.setMag(30); //extend
     let futurePos = p5.Vector.add(this.pos, futurePoint); //generate predicted point
 
     //scroll through all the path points (not nodes)
@@ -84,7 +84,7 @@ class Robot{
 
         //find a point ahead of the normal 
         let dir = p5.Vector.sub(pB, pA);
-        dir.setMag(10); 
+        dir.normalize(); 
 
         //generate point on the path that the robot should follow
         targetPos = normPoint;
@@ -93,8 +93,7 @@ class Robot{
     }
     
     if(i == 0){
-      console.log(PA);
-      console.log(PB);
+      console.log(pp);
 
       console.log(this.pos);
 
@@ -115,6 +114,7 @@ class Robot{
     if(norm !== null){line(futurePos.x, futurePos.y, norm.x, norm.y);}
     fill(255, 0, 0);
     ellipse(targetPos.x, targetPos.y, 10);
+    ellipse(280.9, 258.77, 5);
   }
   
   //add a force to steer the robot
